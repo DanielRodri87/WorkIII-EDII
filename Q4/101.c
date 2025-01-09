@@ -1,41 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
+#include "101.h"
 
-#define REGISTRATION_SIZE 6
-#define AVAILABLE_HASH_SIZE 101
-
-typedef struct Employee
-{
-    char registration[REGISTRATION_SIZE];
-    char name[REGISTRATION_SIZE];
-    char role[REGISTRATION_SIZE];
-    float salary;
-} Employee;
-
-typedef struct hashTable
-{
-    int hash[AVAILABLE_HASH_SIZE];
-    Employee employee[AVAILABLE_HASH_SIZE];
-} HashTable;
-
-// Declarações das funções principais
-void display_menu();
-void testHashFunction(int hashFunction(char[]), int resolveCollision(int, char[]));
-Employee generateEmployee();
-void initializeHashTable(HashTable *hashTable);
-int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Employee employee,
-                        int resolveCollision(int, char[]));
-
-// Declarações de funções auxiliares
-int functionHash1(char registration[]);
-int functionHash2(char registration[]);
-int resolveCollision1(int hash, char registration[]);
-int resolveCollision2(int hash, char registration[]);
-int charToInt(char c);
-
-// Função principal
 int main()
 {
     srand((unsigned)time(NULL));
@@ -107,7 +71,7 @@ void testHashFunction(int hashFunction(char[]), int resolveCollision(int, char[]
     printf("\n==============================\n");
     printf("         RESULTADOS           \n");
     printf("==============================\n");
-    printf(" Tempo de Execução:   %.6f segundos\n", (double)total_time / CLOCKS_PER_SEC);
+    printf(" Tempo de Execução:   %f segundos\n", (double)total_time / CLOCKS_PER_SEC);
     printf(" Total de Colisões:   %d colisões\n", totalCollisions);
     printf("==============================\n");
 }
@@ -175,29 +139,27 @@ int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Emp
     return collisions;
 }
 
-// Funções hash
 int functionHash1(char registration[])
 {
-    char rearranged[REGISTRATION_SIZE];
+    char aux[REGISTRATION_SIZE];
 
-    rearranged[0] = registration[REGISTRATION_SIZE - 2];
-    rearranged[1] = registration[REGISTRATION_SIZE - 1];
+    aux[0] = registration[REGISTRATION_SIZE - 2];
+    aux[1] = registration[REGISTRATION_SIZE - 1];
     for (int i = 0, j = 2; i < REGISTRATION_SIZE - 2; i++, j++)
-        rearranged[j] = registration[i];
+        aux[j] = registration[i];
 
-    int integerValue = atoi((char[]){rearranged[1], rearranged[3], rearranged[5]});
-
-    return (integerValue % AVAILABLE_HASH_SIZE);
+    char temp[4] = {aux[1], aux[3], aux[5], '\0'};
+    int valorInteiro = atoi(temp);
+    return valorInteiro % AVAILABLE_HASH_SIZE;
 }
 
 int functionHash2(char registration[])
 {
-    int part1 = (charToInt(registration[0]) * 100) + (charToInt(registration[2]) * 10) + charToInt(registration[5]);
-    int part2 = (charToInt(registration[1]) * 100) + (charToInt(registration[3]) * 10) + charToInt(registration[4]);
+    int part1 = (charToInt(registration[1 - 1]) * 100) + (charToInt(registration[3 - 1]) * 10) + (charToInt(registration[6 - 1]));
+    int part2 = (charToInt(registration[2 - 1]) * 100) + (charToInt(registration[4 - 1]) * 10) + (charToInt(registration[5 - 1]));
 
-    int sumParts = part1 + part2;
-
-    return (sumParts % AVAILABLE_HASH_SIZE);
+    int mudance = part1 + part2;
+    return mudance % AVAILABLE_HASH_SIZE;
 }
 
 // Resolução de colisões

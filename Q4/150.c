@@ -1,44 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
-
-#define REGISTRATION_SIZE 6
-#define HASH_TABLE_SIZE 150
-
-typedef struct Employee {
-    char registration[REGISTRATION_SIZE];
-    char name[REGISTRATION_SIZE];
-    char role[REGISTRATION_SIZE];
-    float salary;
-} Employee;
-
-typedef struct HashTable {
-    int keys[HASH_TABLE_SIZE];
-    Employee employees[HASH_TABLE_SIZE];
-} HashTable;
-
-// High-Level Functions
-void testHashFunction(int (*hashFunction)(const char[]), int (*collisionResolver)(int, const char[]));
-int main();
-
-// Medium-Level Functions
-Employee createEmployee();
-int insertIntoHashTable(HashTable *table, int hash, const char registration[], Employee employee, int (*collisionResolver)(int, const char[]));
-void initializeHashTable(HashTable *table);
-
-// Hash Functions
-int functionHash1(const char registration[]);
-int functionHash2(const char registration[]);
-
-// Collision Resolvers
-int resolveCollision1(int hash, const char registration[]);
-int resolveCollision2(int hash, const char registration[]);
-
-// Utility Functions
-int charToInt(char c);
-
-// Implementation
+#include "150.h"
 
 int main() {
     srand((unsigned)time(NULL));
