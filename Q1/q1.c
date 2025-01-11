@@ -1,14 +1,21 @@
 #include "q1.h"
 
-int main() {
-    int configuracoes[N_CONFIGS][N_DISCOS];
-    int matrizAdj[N_CONFIGS][N_CONFIGS];
+int main()
+{
+    int configurations[N_CONFIGS][N_DISCOS];
+    int matrixAdj[N_CONFIGS][N_CONFIGS];
 
-    gerarConfiguracoes(configuracoes);
-    gerarMatrizAdjacente(configuracoes, matrizAdj);
+    generateConfigurations(configurations);
+
+    generateAdjacentMatrix(configurations, matrixAdj);
 
     int opcao;
-    do {
+    do
+    {
+        printf("============================\n");
+        printf("      Torres de Hanoi      \n");
+        printf("============================\n");
+
         printf("Escolha uma opção:\n");
         printf("1. Executar Dijkstra\n");
         printf("2. Exibir tempo de execução (100 execuções de Dijkstra)\n");
@@ -16,129 +23,142 @@ int main() {
         printf("Opção: ");
         scanf("%d", &opcao);
 
-        switch (opcao) {
-            case 1:
-                executarDijkstra(matrizAdj, 0, N_CONFIGS - 1);
-                break;
-            case 2:
-                metrificarTempo(matrizAdj);
-                break;
-            case 3:
-                printf("Encerrando o programa...\n");
-                break;
-            default:
-                printf("Opção inválida! Tente novamente.\n");
+        switch (opcao)
+        {
+        case 1:
+            runDijkstra(matrixAdj, 0, N_CONFIGS - 1);
+            break;
+        case 2:
+            measureTime(matrixAdj);
+            break;
+        case 3:
+            printf("Encerrando o programa...\n");
+            break;
+        default:
+            printf("Opção inválida! Tente novamente.\n");
         }
     } while (opcao != 3);
 
     return 0;
 }
 
-void gerarConfiguracoes(int configuracoes[][N_DISCOS]) {
-    for (int i = 0; i < N_CONFIGS; i++) {
+void generateConfigurations(int configurations[][N_DISCOS])
+{
+    for (int i = 0; i < N_CONFIGS; i++)
+    {
         int temp = i;
-        for (int j = 0; j < N_DISCOS; j++) {
-            configuracoes[i][j] = temp % N_PINOS + 1; // Cada disco pode estar em 1, 2 ou 3
+        for (int j = 0; j < N_DISCOS; j++)
+        {
+            configurations[i][j] = temp % N_PINOS + 1;
             temp /= N_PINOS;
         }
     }
 }
 
-int movimentoValido(int config1[], int config2[]) {
-    int movimentos = 0;
-    int discoMovido = -1;
-    int valido = 1;
+int avaliableMoviment(int settings1[], int settings2[])
+{
+    int moviments = 0;
+    int movedDisk = -1;
+    int check = 1;
 
-    for (int i = 0; i < N_DISCOS; i++) {
-        if (config1[i] != config2[i]) {
-            movimentos++;
-            if (movimentos > 1) {
-                valido = 0;
-            }
-            discoMovido = i;
+    for (int i = 0; i < N_DISCOS; i++)
+    {
+        if (settings1[i] != settings2[i])
+        {
+            moviments++;
+            if (moviments > 1)
+                check = 0;
+
+            movedDisk = i;
         }
     }
 
-    if (movimentos == 0 || movimentos > 1) {
-        valido = 0;
-    }
+    if (moviments == 0 || moviments > 1)
+        check = 0;
 
-    if (valido) {
-        int pinoOrigem = config1[discoMovido];
-        int pinoDestino = config2[discoMovido];
+    if (check)
+    {
+        int originPin = settings1[movedDisk];
+        int destinacionPin = settings2[movedDisk];
 
-        for (int i = 0; i < N_DISCOS; i++) {
-            if (i != discoMovido) {
-                if (config1[i] == pinoOrigem && i < discoMovido) {
-                    valido = 0;
-                }
-                if (config2[i] == pinoDestino && i < discoMovido) {
-                    valido = 0;
-                }
+        for (int i = 0; i < N_DISCOS; i++)
+        {
+            if (i != movedDisk)
+            {
+                if (settings1[i] == originPin && i < movedDisk)
+                    check = 0;
+
+                if (settings2[i] == destinacionPin && i < movedDisk)
+                    check = 0;
             }
         }
     }
 
-    return valido;
+    return (check);
 }
 
-void gerarMatrizAdjacente(int configuracoes[N_CONFIGS][N_DISCOS], int matriz[N_CONFIGS][N_CONFIGS]) {
-    for (int i = 0; i < N_CONFIGS; i++) {
-        for (int j = 0; j < N_CONFIGS; j++) {
-            if (movimentoValido(configuracoes[i], configuracoes[j])) {
-                matriz[i][j] = 1;
-            } else {
-                matriz[i][j] = 0;
-            }
+void generateAdjacentMatrix(int configurations[N_CONFIGS][N_DISCOS], int matrix[N_CONFIGS][N_CONFIGS])
+{
+    for (int i = 0; i < N_CONFIGS; i++)
+    {
+        for (int j = 0; j < N_CONFIGS; j++)
+        {
+            if (avaliableMoviment(configurations[i], configurations[j]))
+                matrix[i][j] = 1;
+            else
+                matrix[i][j] = 0;
         }
     }
 }
 
-void executarDijkstra(int matriz[][N_CONFIGS], int inicio, int fim) {
-    int distancias[N_CONFIGS];
-    int visitados[N_CONFIGS];
+void runDijkstra(int matrix[][N_CONFIGS], int start, int end)
+{
+    int distance[N_CONFIGS];
+    int visited[N_CONFIGS];
 
-    for (int i = 0; i < N_CONFIGS; i++) {
-        distancias[i] = INT_MAX;
-        visitados[i] = 0;
+    for (int i = 0; i < N_CONFIGS; i++)
+    {
+        distance[i] = INT_MAX;
+        visited[i] = 0;
     }
 
-    distancias[inicio] = 0;
+    distance[start] = 0;
 
-    for (int count = 0; count < N_CONFIGS - 1; count++) {
-        int u = -1;
+    for (int count = 0; count < N_CONFIGS - 1; count++)
+    {
+        int aux = -1;
 
-        for (int i = 0; i < N_CONFIGS; i++) {
-            if (!visitados[i] && (u == -1 || distancias[i] < distancias[u])) {
-                u = i;
-            }
+        for (int i = 0; i < N_CONFIGS; i++)
+        {
+            if (!visited[i] && (aux == -1 || distance[i] < distance[aux]))
+                aux = i;
         }
 
-        visitados[u] = 1;
+        visited[aux] = 1;
 
-        for (int v = 0; v < N_CONFIGS; v++) {
-            if (!visitados[v] && matriz[u][v] && distancias[u] != INT_MAX &&
-                distancias[u] + matriz[u][v] < distancias[v]) {
-                distancias[v] = distancias[u] + matriz[u][v];
-            }
+        for (int v = 0; v < N_CONFIGS; v++)
+        {
+            if (!visited[v] && matrix[aux][v] && distance[aux] != INT_MAX &&
+                distance[aux] + matrix[aux][v] < distance[v])
+                distance[v] = distance[aux] + matrix[aux][v];
         }
     }
 
-    printf("Menor caminho de %d para %d: %d\n", inicio, fim, distancias[fim]);
+    printf("Menor caminho de %d para %d: %d\n", start, end, distance[end]);
 }
 
-void metrificarTempo(int matriz[][N_CONFIGS]) {
-    clock_t inicio, fim;
+void measureTime(int matrix[][N_CONFIGS])
+{
+    clock_t start, end;
     double tempo;
 
-    inicio = clock();
+    start = clock();
 
-    for (int i = 0; i < 100; i++) {
-        executarDijkstra(matriz, 0, N_CONFIGS - 1);
-    }
+    for (int i = 0; i < 100; i++)
+        runDijkstra(matrix, 0, N_CONFIGS - 1);
 
-    fim = clock();
+    end = clock();
 
-    tempo = (double)(fim - inicio) / CLOCKS_PER_SEC;
+    tempo = (double)(end - start) / CLOCKS_PER_SEC;
     printf("Tempo de 100 execuções: %lf ms\n", tempo);
 }

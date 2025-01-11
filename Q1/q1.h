@@ -7,7 +7,7 @@
 #define N_PINOS 3
 #define N_CONFIGS 81
 
-void gerarConfiguracoes(int configuracoes[][N_DISCOS]);
-void gerarMatrizAdjacente(int configuracoes[N_CONFIGS][N_DISCOS], int matriz[N_CONFIGS][N_CONFIGS]);
-void executarDijkstra(int matriz[][N_CONFIGS], int inicio, int fim);
-void metrificarTempo(int matriz[][N_CONFIGS]);
+void generateConfigurations(int configurations[][N_DISCOS]);
+void generateAdjacentMatrix(int configurations[N_CONFIGS][N_DISCOS], int matrix[N_CONFIGS][N_CONFIGS]);
+void runDijkstra(int matrix[][N_CONFIGS], int start, int end);
+void measureTime(int matrix[][N_CONFIGS]);

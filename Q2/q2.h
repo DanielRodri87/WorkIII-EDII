@@ -9,5 +9,5 @@
 
 void generateConfigurations(int configurations[][N_DISCS], int totalConfigs);
 void adjacencyMatrix(int configurations[N_CONFIGS][N_DISCS], int matrix[N_CONFIGS][N_CONFIGS]);
-void bellmanFord(int matrix[][N_CONFIGS], int startVertex, int endVertex);
+void bellmanFord(int matrix[][N_CONFIGS], int startVertex);
 void measureExecutionTime(int matrix[][N_CONFIGS]);

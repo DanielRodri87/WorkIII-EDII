@@ -29,7 +29,7 @@ int main()
         switch (choice)
         {
         case 1:
-            bellmanFord(matrix, 0, N_CONFIGS - 1);
+            bellmanFord(matrix, 0);
             break;
         case 2:
             measureExecutionTime(matrix);
@@ -95,7 +95,7 @@ int isValidMove(int config1[], int config2[])
         }
     }
 
-    return isValid; 
+    return (isValid); 
 }
 
 void adjacencyMatrix(int configurations[N_CONFIGS][N_DISCS], int matrix[N_CONFIGS][N_CONFIGS])
@@ -112,7 +112,7 @@ void adjacencyMatrix(int configurations[N_CONFIGS][N_DISCS], int matrix[N_CONFIG
     }
 }
 
-void bellmanFord(int matrix[][N_CONFIGS], int startVertex, int endVertex)
+void bellmanFord(int matrix[][N_CONFIGS], int startVertex)
 {
     int distances[N_CONFIGS];
 
@@ -133,14 +133,11 @@ void bellmanFord(int matrix[][N_CONFIGS], int startVertex, int endVertex)
             }
         }
     }
-
-    printf("\nMenor caminho de %d para %d: %d\n", startVertex, endVertex, distances[endVertex]);
 }
 
 void measureExecutionTime(int matrix[][N_CONFIGS])
 {
     int startVertex = 0;
-    int endVertex = N_CONFIGS - 1;
 
     clock_t startTime, endTime;
     double elapsedTime;
@@ -148,7 +145,7 @@ void measureExecutionTime(int matrix[][N_CONFIGS])
     startTime = clock();
 
     for (int i = 0; i < 100; i++)
-        bellmanFord(matrix, startVertex, endVertex);
+        bellmanFord(matrix, startVertex);
 
     endTime = clock();
 
