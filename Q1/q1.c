@@ -2,10 +2,10 @@
 
 
 /**
- * @brief Função principal do programa. Apresenta um menu interativo para o usuário
- * Executar Dijkstra, medição do tempo de execução ou saída do programa.
+ * @brief Função principal do programa, apresenta um menu interativo com três opções:
+ * execução do algoritmo Dijkstra, medição do tempo de execução ou saída do programa.
  *
- * @return int Retorna 0 ao encerrar o programa.
+ * @return Retorna 0 ao encerrar o programa.
  */
 
 int main()
