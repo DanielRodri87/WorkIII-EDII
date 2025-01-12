@@ -1,5 +1,13 @@
 #include "q1.h"
 
+
+/**
+ * @brief Função principal do programa. Apresenta um menu interativo para o usuário
+ * Executar Dijkstra, medição do tempo de execução ou saída do programa.
+ *
+ * @return int Retorna 0 ao encerrar o programa.
+ */
+
 int main()
 {
     int configurations[N_CONFIGS][N_DISCOS];
@@ -42,6 +50,12 @@ int main()
     return 0;
 }
 
+/**
+ * @brief Gera todas as configurações possíveis das torres de Hanoi, armazenando-as na matriz.
+ *
+ * @param configurations Matriz onde as configurações serão armazenadas.
+ */
+
 void generateConfigurations(int configurations[][N_DISCOS])
 {
     for (int i = 0; i < N_CONFIGS; i++)
@@ -54,6 +68,14 @@ void generateConfigurations(int configurations[][N_DISCOS])
         }
     }
 }
+
+/**
+ * @brief Avalia se é possível realizar um movimento válido entre duas configurações.
+ *
+ * @param settings1 Configuração inicial.
+ * @param settings2 Configuração final.
+ * @return int Retorna 1 se o movimento for válido, 0 caso contrário.
+ */
 
 int avaliableMoviment(int settings1[], int settings2[])
 {
@@ -97,6 +119,13 @@ int avaliableMoviment(int settings1[], int settings2[])
     return (check);
 }
 
+/**
+ * @brief Gera a matriz de adjacência representando os movimentos válidos entre configurações.
+ *
+ * @param configurations Matriz com as configurações possíveis das torres de Hanoi.
+ * @param matrix Matriz de adjacência a ser preenchida.
+ */
+
 void generateAdjacentMatrix(int configurations[N_CONFIGS][N_DISCOS], int matrix[N_CONFIGS][N_CONFIGS])
 {
     for (int i = 0; i < N_CONFIGS; i++)
@@ -110,6 +139,14 @@ void generateAdjacentMatrix(int configurations[N_CONFIGS][N_DISCOS], int matrix[
         }
     }
 }
+
+/**
+ * @brief Executa o algoritmo de Dijkstra para encontrar o menor caminho entre dois vértices.
+ *
+ * @param matrix Matriz de adjacência representando o grafo.
+ * @param start Índice do vértice inicial.
+ * @param end Índice do vértice final.
+ */
 
 void runDijkstra(int matrix[][N_CONFIGS], int start, int end)
 {
@@ -146,6 +183,12 @@ void runDijkstra(int matrix[][N_CONFIGS], int start, int end)
 
     printf("Menor caminho de %d para %d: %d\n", start, end, distance[end]);
 }
+
+/**
+ * @brief Mede o tempo de execução do algoritmo de Dijkstra para 100 execuções consecutivas.
+ *
+ * @param matrix Matriz de adjacência representando o grafo.
+ */
 
 void measureTime(int matrix[][N_CONFIGS])
 {
