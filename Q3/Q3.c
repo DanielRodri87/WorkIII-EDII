@@ -6,7 +6,7 @@ int main()
 
     Graph graph;
     Distance *distances;
-    int start = 1, end = 7;
+    int start = 0, end = 9;
 
     initializeGraph(&graph);
     generateGraph(&graph);
@@ -23,14 +23,12 @@ int main()
     return 0;
 }
 
-
 void displayVertex(int id, Graph graph)
 {
     for (int i = 0; i < NUM_VERTICES; i++)
     {
         printf("_____________________\n");
-        printf("|%d| até |%d| = %.2f%%\n", id+1, i+1, graph.edges[id][i] * 100);
-
+        printf("|%d| até |%d| = %.2f%%\n", id + 1, i + 1, graph.edges[id][i] * 100);
     }
 }
 
@@ -60,7 +58,7 @@ void generateGraph(Graph *graph)
         for (int j = 0; j < NUM_VERTICES; j++)
         {
             if (i != j)
-                graph->edges[i][j] = (rand() % 91 + 10) / 100.0; 
+                graph->edges[i][j] = (rand() % 91 + 10) / 100.0;
             else
                 graph->edges[i][j] = 0.0;
         }
@@ -111,30 +109,34 @@ Distance *runDijkstra(int start, Graph graph)
 
 void findShortestPath(int start, int end, Distance *distances)
 {
-    if ((start < NUM_VERTICES && end < NUM_VERTICES))
+    if (start < 0 || start >= NUM_VERTICES || end < 0 || end >= NUM_VERTICES)
+        printf("Indices fora do limite permitido.\n");
+    else
     {
         int path[NUM_VERTICES];
         int pos = 0;
         int current = end;
 
-        while (current != start && current != -1)
+        while (current != start)
         {
-            path[pos++] = current;
-            current = distances[current].predecessor;
+            if (current == -1 || current < 0 || current >= NUM_VERTICES)
+                printf("Não foi possível encontrar o caminho.\n");
+            else
+            {
+                path[pos++] = current;
+                current = distances[current].predecessor;
+            }
         }
 
-        if (current == start)
-            path[pos++] = start;
+        path[pos++] = start;
 
-        printf("Caminho curto entre %d a %d: ", start, end);
+        printf("Caminho curto entre %d e %d: ", start+1, end+1);
         for (int i = pos - 1; i >= 0; i--)
         {
-            printf("%d", path[i]);
+            printf("%d", path[i]+1);
             if (i > 0)
                 printf(" -> ");
         }
         printf("\n");
     }
-    else
-        printf("Foi impossível encontrar o caminho\n");
 }

@@ -47,7 +47,6 @@ void display_menu()
     printf(" Escolha uma opção: ");
 }
 
-// Teste das funções hash
 void testHashFunction(int hashFunction(char[]), int resolveCollision(int, char[]))
 {
     HashTable hashTable;
@@ -109,8 +108,7 @@ void initializeHashTable(HashTable *hashTable)
 }
 
 // Inserção na tabela hash
-int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Employee employee,
-                        int resolveCollision(int, char[]))
+int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Employee employee, int resolveCollision(int, char[]))
 {
     int collisions = 0, inserted = 0;
     int newHash = hash;
