@@ -1,5 +1,12 @@
 #include "q2.h"
 
+/**
+ * @brief Exibe o menu de opções para o usuário.
+ * 
+ * O menu apresenta três opções: execução do algoritmo Bellman-Ford, metrificação do tempo de execução 
+ * ou saída do programa.
+ */
+
 void displayMenu()
 {
     printf("============================\n");
@@ -11,6 +18,15 @@ void displayMenu()
     printf("3. Sair\n");
     printf("Digite a opção desejada: ");
 }
+
+/**
+ * @brief Função principal do programa.
+ * 
+ * Esta função inicializa as configurações das Torres de Hanoi, cria a matriz de adjacência
+ * e permite ao usuário interagir com o programa por meio de um menu.
+ * 
+ * @return Retorna 0 ao finalizar o programa.
+ */
 
 int main()
 {
@@ -45,6 +61,13 @@ int main()
     return 0;
 }
 
+/**
+ * @brief Gera todas as configurações possíveis para as Torres de Hanoi.
+ * 
+ * @param configurations Matriz onde as configurações serão armazenadas.
+ * @param totalConfigs Número total de configurações possíveis.
+ */
+
 void generateConfigurations(int configurations[][N_DISCS], int totalConfigs)
 {
     for (int i = 0; i < totalConfigs; i++)
@@ -57,6 +80,14 @@ void generateConfigurations(int configurations[][N_DISCS], int totalConfigs)
         }
     }
 }
+
+/**
+ * @brief Verifica se uma jogada entre duas configurações é válida.
+ * 
+ * @param config1 Configuração inicial.
+ * @param config2 Configuração final.
+ * @return Retorna 1 se a jogada for válida; caso contrário, retorna 0.
+ */
 
 int isValidMove(int config1[], int config2[])
 {
@@ -98,6 +129,13 @@ int isValidMove(int config1[], int config2[])
     return (isValid); 
 }
 
+/**
+ * @brief Gera a matriz de adjacência baseada nas configurações das Torres de Hanoi.
+ * 
+ * @param configurations Matriz com as configurações das Torres de Hanoi.
+ * @param matrix Matriz de adjacência resultante.
+ */
+
 void adjacencyMatrix(int configurations[N_CONFIGS][N_DISCS], int matrix[N_CONFIGS][N_CONFIGS])
 {
     for (int i = 0; i < N_CONFIGS; i++)
@@ -111,6 +149,13 @@ void adjacencyMatrix(int configurations[N_CONFIGS][N_DISCS], int matrix[N_CONFIG
         }
     }
 }
+
+/**
+ * @brief Executa o algoritmo Bellman-Ford para encontrar os menores caminhos.
+ * 
+ * @param matrix Matriz de adjacência representando o grafo.
+ * @param startVertex Vértice de início.
+ */
 
 void bellmanFord(int matrix[][N_CONFIGS], int startVertex)
 {
@@ -134,6 +179,12 @@ void bellmanFord(int matrix[][N_CONFIGS], int startVertex)
         }
     }
 }
+
+/**
+ * @brief Mede o tempo de execução do algoritmo Bellman-Ford para 100 execuções.
+ * 
+ * @param matrix Matriz de adjacência representando o grafo.
+ */
 
 void measureExecutionTime(int matrix[][N_CONFIGS])
 {
