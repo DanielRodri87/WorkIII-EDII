@@ -172,6 +172,17 @@ void bellmanFord(int matrix[][NUMBER_CONFIGS], int startVertex)
             }
         }
     }
+
+    int maxDistance = 0;
+    for (int i = 0; i < NUMBER_CONFIGS; i++)
+    {
+        if (distances[i] != INT_MAX && distances[i] > maxDistance)
+        {
+            maxDistance = distances[i];
+        }
+    }
+
+    printf("O maior caminho a partir do vértice %d é: %d\n", startVertex, maxDistance);
 }
 
 /**
