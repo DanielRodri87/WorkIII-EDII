@@ -3,11 +3,11 @@
 #include <limits.h>
 #include <time.h>
 
-#define N_DISCOS 4
-#define N_PINOS 3
-#define N_CONFIGS 81
+#define NUMBER_DISKS 4
+#define NUMBER_PINS 3
+#define NUMBER_CONFIGS 81
 
-void generateConfigurations(int configurations[][N_DISCOS]);
-void generateAdjacentMatrix(int configurations[N_CONFIGS][N_DISCOS], int matrix[N_CONFIGS][N_CONFIGS]);
-void runDijkstra(int matrix[][N_CONFIGS], int start, int end);
-void measureTime(int matrix[][N_CONFIGS]);
+void generateConfigurations(int configurations[][NUMBER_DISKS]);
+void generateAdjacentMatrix(int configurations[NUMBER_CONFIGS][NUMBER_DISKS], int matrix[NUMBER_CONFIGS][NUMBER_CONFIGS]);
+void runDijkstra(int matrix[][NUMBER_CONFIGS], int start, int end);
+void measureTime(int matrix[][NUMBER_CONFIGS]);

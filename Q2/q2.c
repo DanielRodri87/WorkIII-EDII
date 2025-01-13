@@ -30,19 +30,19 @@ void displayMenu()
 
 int main()
 {
-    int configurations[N_CONFIGS][N_DISCS];
-    int matrix[N_CONFIGS][N_CONFIGS];
-    int choice;
+    int configurations[NUMBER_CONFIGS][NUMBER_DISKS];
+    int matrix[NUMBER_CONFIGS][NUMBER_CONFIGS];
+    int option;
 
-    generateConfigurations(configurations, N_CONFIGS);
+    generateConfigurations(configurations, NUMBER_CONFIGS);
     adjacencyMatrix(configurations, matrix);
 
     do
     {
         displayMenu();
-        scanf("%d", &choice);
+        scanf("%d", &option);
 
-        switch (choice)
+        switch (option)
         {
         case 1:
             bellmanFord(matrix, 0);
@@ -56,7 +56,7 @@ int main()
         default:
             printf("Opção inválida, tente novamente\n");
         }
-    } while (choice != 3);
+    } while (option != 3);
 
     return 0;
 }
@@ -68,15 +68,15 @@ int main()
  * @param totalConfigs Número total de configurações possíveis.
  */
 
-void generateConfigurations(int configurations[][N_DISCS], int totalConfigs)
+void generateConfigurations(int configurations[][NUMBER_DISKS], int totalConfigs)
 {
     for (int i = 0; i < totalConfigs; i++)
     {
         int temp = i;
-        for (int j = 0; j < N_DISCS; j++)
+        for (int j = 0; j < NUMBER_DISKS; j++)
         {
-            configurations[i][j] = temp % N_PEGS + 1; 
-            temp /= N_PEGS;
+            configurations[i][j] = temp % NUMBER_PINS + 1; 
+            temp /= NUMBER_PINS;
         }
     }
 }
@@ -95,7 +95,7 @@ int isValidMove(int config1[], int config2[])
     int movedDisc = -1;
     int isValid = 1; 
 
-    for (int i = 0; i < N_DISCS; i++)
+    for (int i = 0; i < NUMBER_DISKS; i++)
     {
         if (config1[i] != config2[i])
         {
@@ -114,7 +114,7 @@ int isValidMove(int config1[], int config2[])
         int sourcePeg = config1[movedDisc];
         int targetPeg = config2[movedDisc];
 
-        for (int i = 0; i < N_DISCS; i++)
+        for (int i = 0; i < NUMBER_DISKS; i++)
         {
             if (i != movedDisc)
             {
@@ -136,11 +136,11 @@ int isValidMove(int config1[], int config2[])
  * @param matrix Matriz de adjacência resultante.
  */
 
-void adjacencyMatrix(int configurations[N_CONFIGS][N_DISCS], int matrix[N_CONFIGS][N_CONFIGS])
+void adjacencyMatrix(int configurations[NUMBER_CONFIGS][NUMBER_DISKS], int matrix[NUMBER_CONFIGS][NUMBER_CONFIGS])
 {
-    for (int i = 0; i < N_CONFIGS; i++)
+    for (int i = 0; i < NUMBER_CONFIGS; i++)
     {
-        for (int j = 0; j < N_CONFIGS; j++)
+        for (int j = 0; j < NUMBER_CONFIGS; j++)
         {
             if (isValidMove(configurations[i], configurations[j]))
                 matrix[i][j] = 1; 
@@ -157,20 +157,20 @@ void adjacencyMatrix(int configurations[N_CONFIGS][N_DISCS], int matrix[N_CONFIG
  * @param startVertex Vértice de início.
  */
 
-void bellmanFord(int matrix[][N_CONFIGS], int startVertex)
+void bellmanFord(int matrix[][NUMBER_CONFIGS], int startVertex)
 {
-    int distances[N_CONFIGS];
+    int distances[NUMBER_CONFIGS];
 
-    for (int i = 0; i < N_CONFIGS; i++)
+    for (int i = 0; i < NUMBER_CONFIGS; i++)
         distances[i] = INT_MAX;
 
     distances[startVertex] = 0;
 
-    for (int step = 0; step < N_CONFIGS - 1; step++)
+    for (int step = 0; step < NUMBER_CONFIGS - 1; step++)
     {
-        for (int u = 0; u < N_CONFIGS; u++)
+        for (int u = 0; u < NUMBER_CONFIGS; u++)
         {
-            for (int v = 0; v < N_CONFIGS; v++)
+            for (int v = 0; v < NUMBER_CONFIGS; v++)
             {
                 if (matrix[u][v] && distances[u] != INT_MAX &&
                     distances[u] + matrix[u][v] < distances[v])
@@ -186,7 +186,7 @@ void bellmanFord(int matrix[][N_CONFIGS], int startVertex)
  * @param matrix Matriz de adjacência representando o grafo.
  */
 
-void measureExecutionTime(int matrix[][N_CONFIGS])
+void measureExecutionTime(int matrix[][NUMBER_CONFIGS])
 {
     int startVertex = 0;
 

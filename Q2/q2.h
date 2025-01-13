@@ -3,11 +3,11 @@
 #include <limits.h>
 #include <time.h>
 
-#define N_DISCS 4
-#define N_PEGS 3
-#define N_CONFIGS 81
+#define NUMBER_DISKS 4
+#define NUMBER_PINS 3
+#define NUMBER_CONFIGS 81
 
-void generateConfigurations(int configurations[][N_DISCS], int totalConfigs);
-void adjacencyMatrix(int configurations[N_CONFIGS][N_DISCS], int matrix[N_CONFIGS][N_CONFIGS]);
-void bellmanFord(int matrix[][N_CONFIGS], int startVertex);
-void measureExecutionTime(int matrix[][N_CONFIGS]);
+void generateConfigurations(int configurations[][NUMBER_DISKS], int totalConfigs);
+void adjacencyMatrix(int configurations[NUMBER_CONFIGS][NUMBER_DISKS], int matrix[NUMBER_CONFIGS][NUMBER_CONFIGS]);
+void bellmanFord(int matrix[][NUMBER_CONFIGS], int startVertex);
+void measureExecutionTime(int matrix[][NUMBER_CONFIGS]);

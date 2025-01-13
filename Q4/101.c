@@ -184,8 +184,8 @@ int functionHash1(char registration[])
         aux[j] = registration[i];
 
     char temp[4] = {aux[1], aux[3], aux[5], '\0'};
-    int valorInteiro = atoi(temp);
-    return valorInteiro % AVAILABLE_HASH_SIZE;
+    int intValue = atoi(temp);
+    return intValue % AVAILABLE_HASH_SIZE;
 }
 
 /**
