@@ -1,5 +1,10 @@
 #include "101.h"
 
+/**
+ * @brief Função principal do programa. Exibe o menu, processa a escolha do usuário e testa as funções hash.
+ * @return Retorna 0 ao finalizar o programa.
+ */
+
 int main()
 {
     srand((unsigned)time(NULL));
@@ -34,7 +39,10 @@ int main()
     return 0;
 }
 
-// Exibição do menu
+/**
+ * @brief Exibe o menu de opções para o usuário.
+ */
+
 void display_menu()
 {
     printf("\n==============================\n");
@@ -46,6 +54,12 @@ void display_menu()
     printf("==============================\n");
     printf(" Escolha uma opção: ");
 }
+
+/**
+ * @brief Testa uma função hash e exibe os resultados de desempenho.
+ * @param hashFunction Ponteiro para a função hash a ser testada.
+ * @param resolveCollision Ponteiro para a função de resolução de colisões.
+ */
 
 void testHashFunction(int hashFunction(char[]), int resolveCollision(int, char[]))
 {
@@ -75,7 +89,11 @@ void testHashFunction(int hashFunction(char[]), int resolveCollision(int, char[]
     printf("==============================\n");
 }
 
-// Geração de um funcionário aleatório
+/**
+ * @brief Gera um funcionário com valores aleatórios para os campos.
+ * @return Employee Estrutura de funcionário gerada.
+ */
+
 Employee generateEmployee()
 {
     int number = rand() % 100000;
@@ -100,14 +118,27 @@ Employee generateEmployee()
     return employee;
 }
 
-// Inicialização da tabela hash
+/**
+ * @brief Inicializa a tabela hash, preenchendo com valores padrão.
+ * @param hashTable Ponteiro para a tabela hash a ser inicializada.
+ */
+
 void initializeHashTable(HashTable *hashTable)
 {
     for (int i = 0; i < AVAILABLE_HASH_SIZE; i++)
         hashTable->hash[i] = -1;
 }
 
-// Inserção na tabela hash
+/**
+ * @brief Insere um funcionário na tabela hash.
+ * @param hashTable Ponteiro para a tabela hash.
+ * @param hash Valor hash gerado.
+ * @param registration Registro do funcionário.
+ * @param employee Estrutura do funcionário a ser inserida.
+ * @param resolveCollision Função para resolver colisões.
+ * @return int Número de colisões ocorridas durante a inserção.
+ */
+
 int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Employee employee, int resolveCollision(int, char[]))
 {
     int collisions = 0, inserted = 0;
@@ -137,6 +168,12 @@ int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Emp
     return collisions;
 }
 
+/**
+ * @brief Função hash que reorganiza os caracteres do registro.
+ * @param registration Registro do funcionário.
+ * @return int Valor hash gerado.
+ */
+
 int functionHash1(char registration[])
 {
     char aux[REGISTRATION_SIZE];
@@ -151,6 +188,12 @@ int functionHash1(char registration[])
     return valorInteiro % AVAILABLE_HASH_SIZE;
 }
 
+/**
+ * @brief Função hash que utiliza somas específicas do registro.
+ * @param registration Registro do funcionário.
+ * @return int Valor hash gerado.
+ */
+
 int functionHash2(char registration[])
 {
     int part1 = (charToInt(registration[1 - 1]) * 100) + (charToInt(registration[3 - 1]) * 10) + (charToInt(registration[6 - 1]));
@@ -160,12 +203,25 @@ int functionHash2(char registration[])
     return mudance % AVAILABLE_HASH_SIZE;
 }
 
-// Resolução de colisões
+/**
+ * @brief Resolve colisões somando o valor do primeiro caractere.
+ * @param hash Valor hash atual.
+ * @param registration Registro do funcionário.
+ * @return int Novo valor hash.
+ */
+
 int resolveCollision1(int hash, char registration[])
 {
     char firstCharactere[2] = {registration[0], '\0'};
     return (hash + atoi(firstCharactere));
 }
+
+/**
+ * @brief Resolve colisões adicionando um valor fixo de 7.
+ * @param hash Valor hash atual.
+ * @param registration Registro do funcionário (não utilizado).
+ * @return int Novo valor hash.
+ */
 
 int resolveCollision2(int hash, char registration[])
 {
@@ -173,7 +229,12 @@ int resolveCollision2(int hash, char registration[])
     return (hash + 7);
 }
 
-// Conversão de char para int
+/**
+ * @brief Converte um caractere numérico para inteiro.
+ * @param c Caractere a ser convertido.
+ * @return int Valor inteiro do caractere.
+ */
+
 int charToInt(char c)
 {
     return ((int)c - '0');

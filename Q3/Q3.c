@@ -1,5 +1,12 @@
 #include "Q3.h"
 
+/**
+ * @brief Função principal que inicializa o grafo, gera um grafo com valores aleatórios,
+ * executa o algoritmo de Dijkstra e exibe o menor caminho entre dois vértices.
+ * 
+ * @return Retorna 0 ao encerrar o programa.
+ */
+
 int main()
 {
     srand((unsigned int)time(NULL));
@@ -23,6 +30,13 @@ int main()
     return 0;
 }
 
+/**
+ * @brief Exibe as arestas de um vértice no grafo.
+ * 
+ * @param id Índice do vértice a ser exibido.
+ * @param graph Grafo contendo as arestas.
+ */
+
 void displayVertex(int id, Graph graph)
 {
     for (int i = 0; i < NUM_VERTICES; i++)
@@ -31,6 +45,12 @@ void displayVertex(int id, Graph graph)
         printf("|%d| até |%d| = %.2f%%\n", id + 1, i + 1, graph.edges[id][i] * 100);
     }
 }
+
+/**
+ * @brief Exibe o grafo completo, mostrando todas as arestas entre os vértices.
+ * 
+ * @param graph Grafo a ser exibido.
+ */
 
 void displayGraph(Graph graph)
 {
@@ -41,6 +61,12 @@ void displayGraph(Graph graph)
     }
 }
 
+/**
+ * @brief Inicializa o grafo, configurando todos os vértices e arestas com valores padrão.
+ * 
+ * @param graph Ponteiro para o grafo que será inicializado.
+ */
+
 void initializeGraph(Graph *graph)
 {
     for (int id = 0; id < NUM_VERTICES; id++)
@@ -50,6 +76,12 @@ void initializeGraph(Graph *graph)
             graph->edges[id][edge] = 0.0;
     }
 }
+
+/**
+ * @brief Gera valores aleatórios para as arestas do grafo, com valores entre 0.10 e 1.00.
+ * 
+ * @param graph Ponteiro para o grafo que será preenchido.
+ */
 
 void generateGraph(Graph *graph)
 {
@@ -65,6 +97,15 @@ void generateGraph(Graph *graph)
     }
 }
 
+/**
+ * @brief Atualiza as distâncias no algoritmo de Dijkstra.
+ * 
+ * @param distances Ponteiro para as distâncias calculadas até o momento.
+ * @param graph Grafo contendo as arestas.
+ * @param currentDest Índice do vértice de origem.
+ * @param nextDest Índice do vértice de destino.
+ */
+
 void updateDistance(Distance *distances, Graph graph, int currentDest, int nextDest)
 {
     distances[nextDest].id = nextDest;
@@ -75,6 +116,14 @@ void updateDistance(Distance *distances, Graph graph, int currentDest, int nextD
     else
         distances[nextDest].probability = distances[currentDest].probability * graph.edges[currentDest][nextDest];
 }
+
+/**
+ * @brief Executa o algoritmo de Dijkstra para encontrar os menores caminhos em um grafo.
+ * 
+ * @param start Índice do vértice inicial.
+ * @param graph Grafo sobre o qual o algoritmo será executado.
+ * @return Distance* Ponteiro para o array de distâncias calculadas.
+ */
 
 Distance *runDijkstra(int start, Graph graph)
 {
@@ -106,6 +155,14 @@ Distance *runDijkstra(int start, Graph graph)
 
     return (distances);
 }
+
+/**
+ * @brief Encontra e exibe o menor caminho entre dois vértices.
+ * 
+ * @param start Índice do vértice inicial.
+ * @param end Índice do vértice final.
+ * @param distances Ponteiro para o array de distâncias calculadas.
+ */
 
 void findShortestPath(int start, int end, Distance *distances)
 {
