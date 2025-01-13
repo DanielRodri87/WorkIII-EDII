@@ -7,7 +7,6 @@
  *
  * @return Retorna 0 ao encerrar o programa.
  */
-
 int main()
 {
     int configurations[NUMBER_CONFIGS][NUMBER_DISKS];
@@ -55,7 +54,6 @@ int main()
  *
  * @param configurations Matriz onde as configurações serão armazenadas.
  */
-
 void generateConfigurations(int configurations[][NUMBER_DISKS])
 {
     for (int i = 0; i < NUMBER_CONFIGS; i++)
@@ -76,7 +74,6 @@ void generateConfigurations(int configurations[][NUMBER_DISKS])
  * @param settings2 Configuração final.
  * @return int Retorna 1 se o movimento for válido, 0 caso contrário.
  */
-
 int avaliableMoviment(int settings1[], int settings2[])
 {
     int moviments = 0;
@@ -125,7 +122,6 @@ int avaliableMoviment(int settings1[], int settings2[])
  * @param configurations Matriz com as configurações possíveis das torres de Hanoi.
  * @param matrix Matriz de adjacência a ser preenchida.
  */
-
 void generateAdjacentMatrix(int configurations[NUMBER_CONFIGS][NUMBER_DISKS], int matrix[NUMBER_CONFIGS][NUMBER_CONFIGS])
 {
     for (int i = 0; i < NUMBER_CONFIGS; i++)
@@ -147,7 +143,6 @@ void generateAdjacentMatrix(int configurations[NUMBER_CONFIGS][NUMBER_DISKS], in
  * @param start Índice do vértice inicial.
  * @param end Índice do vértice final.
  */
-
 void runDijkstra(int matrix[][NUMBER_CONFIGS], int start, int end)
 {
     int distance[NUMBER_CONFIGS];
@@ -189,7 +184,6 @@ void runDijkstra(int matrix[][NUMBER_CONFIGS], int start, int end)
  *
  * @param matrix Matriz de adjacência representando o grafo.
  */
-
 void measureTime(int matrix[][NUMBER_CONFIGS])
 {
     clock_t start, end;

@@ -6,7 +6,6 @@
  * 
  * @return Retorna 0 ao encerrar o programa.
  */
-
 int main()
 {
     srand((unsigned int)time(NULL));
@@ -36,7 +35,6 @@ int main()
  * @param id Índice do vértice a ser exibido.
  * @param graph Grafo contendo as arestas.
  */
-
 void displayVertex(int id, Graph graph)
 {
     for (int i = 0; i < NUM_VERTICES; i++)
@@ -66,7 +64,6 @@ void displayGraph(Graph graph)
  * 
  * @param graph Ponteiro para o grafo que será inicializado.
  */
-
 void initializeGraph(Graph *graph)
 {
     for (int id = 0; id < NUM_VERTICES; id++)
@@ -82,7 +79,6 @@ void initializeGraph(Graph *graph)
  * 
  * @param graph Ponteiro para o grafo que será preenchido.
  */
-
 void generateGraph(Graph *graph)
 {
     for (int i = 0; i < NUM_VERTICES; i++)
@@ -105,7 +101,6 @@ void generateGraph(Graph *graph)
  * @param currentDest Índice do vértice de origem.
  * @param nextDest Índice do vértice de destino.
  */
-
 void updateDistance(Distance *distances, Graph graph, int currentDest, int nextDest)
 {
     distances[nextDest].id = nextDest;
@@ -124,7 +119,6 @@ void updateDistance(Distance *distances, Graph graph, int currentDest, int nextD
  * @param graph Grafo sobre o qual o algoritmo será executado.
  * @return Distance* Ponteiro para o array de distâncias calculadas.
  */
-
 Distance *runDijkstra(int start, Graph graph)
 {
     Distance *distances;
@@ -163,7 +157,6 @@ Distance *runDijkstra(int start, Graph graph)
  * @param end Índice do vértice final.
  * @param distances Ponteiro para o array de distâncias calculadas.
  */
-
 void findShortestPath(int start, int end, Distance *distances)
 {
     if (start < 0 || start >= NUM_VERTICES || end < 0 || end >= NUM_VERTICES)

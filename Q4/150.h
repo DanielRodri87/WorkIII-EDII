@@ -21,9 +21,11 @@ typedef struct HashTable {
 void testHashFunction(int (*hashFunction)(const char[]), int (*collisionResolver)(int, const char[]));
 Employee createEmployee();
 int insertIntoHashTable(HashTable *table, int hash, const char registration[], Employee employee, int (*collisionResolver)(int, const char[]));
+
 void initializeHashTable(HashTable *table);
 int functionHash1(const char registration[]);
 int functionHash2(const char registration[]);
+
 int resolveCollision1(int hash, const char registration[]);
 int resolveCollision2(int hash, const char registration[]);
 int charToInt(char c);

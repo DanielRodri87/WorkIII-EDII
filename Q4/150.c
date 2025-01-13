@@ -6,11 +6,13 @@
  * @return Retorna 0 ao finalizar o programa.
  */
 
-int main() {
+int main()
+{
     srand((unsigned)time(NULL));
     int option;
 
-    do {
+    do
+    {
         printf("\n===========================\n");
         printf("       Hash Tester         \n");
         printf("===========================\n");
@@ -21,20 +23,21 @@ int main() {
         printf("Escolha uma op\u00e7\u00e3o: ");
         scanf("%d", &option);
 
-        switch (option) {
-            case 1:
-                printf("\nTestando Fun\u00e7\u00e3o de Hash 1:\n");
-                testHashFunction(functionHash1, resolveCollision1);
-                break;
-            case 2:
-                printf("\nTestando Fun\u00e7\u00e3o de Hash 2:\n");
-                testHashFunction(functionHash2, resolveCollision2);
-                break;
-            case 3:
-                printf("\nSaindo do programa...\n");
-                break;
-            default:
-                printf("\nOp\u00e7\u00e3o inv\u00e1lida! Tente novamente.\n");
+        switch (option)
+        {
+        case 1:
+            printf("\nTestando Fun\u00e7\u00e3o de Hash 1:\n");
+            testHashFunction(functionHash1, resolveCollision1);
+            break;
+        case 2:
+            printf("\nTestando Fun\u00e7\u00e3o de Hash 2:\n");
+            testHashFunction(functionHash2, resolveCollision2);
+            break;
+        case 3:
+            printf("\nSaindo do programa...\n");
+            break;
+        default:
+            printf("\nOp\u00e7\u00e3o inv\u00e1lida! Tente novamente.\n");
         }
     } while (option != 3);
 
@@ -46,15 +49,16 @@ int main() {
  * @param hashFunction Ponteiro para a função de hash.
  * @param collisionResolver Ponteiro para a função de resolução de colisões.
  */
-
-void testHashFunction(int (*hashFunction)(const char[]), int (*collisionResolver)(int, const char[])) {
+void testHashFunction(int (*hashFunction)(const char[]), int (*collisionResolver)(int, const char[]))
+{
     HashTable table;
     initializeHashTable(&table);
 
     int totalCollisions = 0;
     clock_t totalTime = 0;
 
-    for (int i = 0; i < 1000; i++) {
+    for (int i = 0; i < 1000; i++)
+    {
         Employee employee = createEmployee();
 
         clock_t startTime = clock();
@@ -77,13 +81,14 @@ void testHashFunction(int (*hashFunction)(const char[]), int (*collisionResolver
  * @brief Cria um funcionário com dados aleatórios.
  * @return Um objeto Employee preenchido com valores gerados.
  */
-
-Employee createEmployee() {
+Employee createEmployee()
+{
     int number = rand() % 100000;
     Employee employee;
     employee.salary = (float)number;
 
-    for (int i = 0; i < REGISTRATION_SIZE; i++, number /= 10) {
+    for (int i = 0; i < REGISTRATION_SIZE; i++, number /= 10)
+    {
         int currentDigit = number % 10;
         employee.registration[i] = (char)(currentDigit + '0');
         employee.name[i] = (char)(currentDigit + '0');
@@ -97,7 +102,7 @@ Employee createEmployee() {
     if (employee.registration[0] == '0')
         employee.registration[0] = '1';
 
-    return employee;
+    return (employee);
 }
 
 /**
@@ -109,36 +114,41 @@ Employee createEmployee() {
  * @param collisionResolver Ponteiro para a função de resolução de colisões.
  * @return O número de colisões ocorridas durante a inserção.
  */
-
-int insertIntoHashTable(HashTable *table, int hash, const char registration[], Employee employee, int (*collisionResolver)(int, const char[])) {
+int insertIntoHashTable(HashTable *table, int hash, const char registration[], Employee employee, int (*collisionResolver)(int, const char[]))
+{
     int collisions = 0, insered = 0;
     int newHash = hash;
 
-    while (newHash < HASH_TABLE_SIZE && insered == 0) {
-        if (table->keys[newHash] == -1) {
+    while (newHash < HASH_TABLE_SIZE && insered == 0)
+    {
+        if (table->keys[newHash] == -1)
+        {
             table->keys[newHash] = newHash;
             table->employees[newHash] = employee;
             insered = 1;
-        } else {
+        }
+        else
+        {
             collisions++;
             newHash = collisionResolver(newHash, registration);
         }
     }
 
-    if (insered == 0) {
+    if (insered == 0)
+    {
         table->keys[hash] = hash;
         table->employees[hash] = employee;
     }
 
-    return collisions;
+    return (collisions);
 }
 
 /**
  * @brief Inicializa a tabela hash, definindo todas as chaves como vazias.
  * @param table Ponteiro para a tabela hash.
  */
-
-void initializeHashTable(HashTable *table) {
+void initializeHashTable(HashTable *table)
+{
     for (int i = 0; i < HASH_TABLE_SIZE; i++)
         table->keys[i] = -1;
 }
@@ -148,9 +158,9 @@ void initializeHashTable(HashTable *table) {
  * @param registration O registro do funcionário (uma string com o identificador).
  * @return O valor do hash calculado, que é o resultado da operação módulo sobre um valor combinado extraído do registro.
  */
-
-int functionHash1(const char registration[]) {
-    char rearranged[REGISTRATION_SIZE];
+int functionHash1(const char registration[])
+{
+    char rearranged[REGISTRATION_SIZE + 1];
 
     rearranged[0] = registration[REGISTRATION_SIZE - 2];
     rearranged[1] = registration[REGISTRATION_SIZE - 1];
@@ -168,8 +178,8 @@ int functionHash1(const char registration[]) {
  * @param registration O registro do funcionário (uma string com o identificador).
  * @return O valor do hash calculado, após a combinação das partes numéricas extraídas do registro.
  */
-
-int functionHash2(const char registration[]) {
+int functionHash2(const char registration[])
+{
     int part1 = charToInt(registration[0]) * 100 + charToInt(registration[2]) * 10 + charToInt(registration[5]);
     int part2 = charToInt(registration[1]) * 100 + charToInt(registration[3]) * 10 + charToInt(registration[4]);
 
@@ -177,14 +187,15 @@ int functionHash2(const char registration[]) {
 }
 
 /**
- * @brief Resolve colisões no cálculo do hash, aplicando uma estratégia que ajusta o valor do hash com base no primeiro dígito do registro do funcionário. 
+ * @brief Resolve colisões no cálculo do hash, aplicando uma estratégia que ajusta o valor do hash com base no primeiro dígito do registro do funcionário.
  * @param hash O valor atual do hash.
  * @param registration O registro do funcionário, utilizado para ajustar o valor do hash.
  * @return O novo valor do hash após a aplicação da estratégia de resolução de colisão.
  */
-
-int resolveCollision1(int hash, const char registration[]) {
+int resolveCollision1(int hash, const char registration[])
+{
     char firstDigit[2] = {registration[0], '\0'};
+
     return (hash + atoi(firstDigit));
 }
 
@@ -194,9 +205,10 @@ int resolveCollision1(int hash, const char registration[]) {
  * @param registration O registro do funcionário (não utilizado nesta estratégia, mas presente como parâmetro).
  * @return O novo valor do hash após a aplicação da estratégia de resolução de colisão com incremento fixo.
  */
-
-int resolveCollision2(int hash, const char registration[]) {
+int resolveCollision2(int hash, const char registration[])
+{
     (void)registration;
+
     return (hash + 5);
 }
 
@@ -205,7 +217,7 @@ int resolveCollision2(int hash, const char registration[]) {
  * @param c Caractere a ser convertido.
  * @return Valor inteiro correspondente ao caractere.
  */
-
-int charToInt(char c) {
-    return (int)(c - '0');
+int charToInt(char c)
+{
+    return ((int)(c - '0'));
 }

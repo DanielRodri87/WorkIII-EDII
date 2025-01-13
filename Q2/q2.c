@@ -6,7 +6,6 @@
  * O menu apresenta três opções: execução do algoritmo Bellman-Ford, metrificação do tempo de execução 
  * ou saída do programa.
  */
-
 void displayMenu()
 {
     printf("============================\n");
@@ -27,7 +26,6 @@ void displayMenu()
  * 
  * @return Retorna 0 ao finalizar o programa.
  */
-
 int main()
 {
     int configurations[NUMBER_CONFIGS][NUMBER_DISKS];
@@ -67,7 +65,6 @@ int main()
  * @param configurations Matriz onde as configurações serão armazenadas.
  * @param totalConfigs Número total de configurações possíveis.
  */
-
 void generateConfigurations(int configurations[][NUMBER_DISKS], int totalConfigs)
 {
     for (int i = 0; i < totalConfigs; i++)
@@ -88,7 +85,6 @@ void generateConfigurations(int configurations[][NUMBER_DISKS], int totalConfigs
  * @param config2 Configuração final.
  * @return Retorna 1 se a jogada for válida; caso contrário, retorna 0.
  */
-
 int isValidMove(int config1[], int config2[])
 {
     int moves = 0;
@@ -135,7 +131,6 @@ int isValidMove(int config1[], int config2[])
  * @param configurations Matriz com as configurações das Torres de Hanoi.
  * @param matrix Matriz de adjacência resultante.
  */
-
 void adjacencyMatrix(int configurations[NUMBER_CONFIGS][NUMBER_DISKS], int matrix[NUMBER_CONFIGS][NUMBER_CONFIGS])
 {
     for (int i = 0; i < NUMBER_CONFIGS; i++)
@@ -156,7 +151,6 @@ void adjacencyMatrix(int configurations[NUMBER_CONFIGS][NUMBER_DISKS], int matri
  * @param matrix Matriz de adjacência representando o grafo.
  * @param startVertex Vértice de início.
  */
-
 void bellmanFord(int matrix[][NUMBER_CONFIGS], int startVertex)
 {
     int distances[NUMBER_CONFIGS];
@@ -185,7 +179,6 @@ void bellmanFord(int matrix[][NUMBER_CONFIGS], int startVertex)
  * 
  * @param matrix Matriz de adjacência representando o grafo.
  */
-
 void measureExecutionTime(int matrix[][NUMBER_CONFIGS])
 {
     int startVertex = 0;

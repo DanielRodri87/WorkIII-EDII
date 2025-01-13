@@ -20,17 +20,15 @@ typedef struct hashTable
     Employee employee[AVAILABLE_HASH_SIZE];
 } HashTable;
 
-// Declarações das funções principais
 void display_menu();
 void testHashFunction(int hashFunction(char[]), int resolveCollision(int, char[]));
 Employee generateEmployee();
-void initializeHashTable(HashTable *hashTable);
-int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Employee employee,
-                        int resolveCollision(int, char[]));
 
-// Declarações de funções auxiliares
+void initializeHashTable(HashTable *hashTable);
+int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Employee employee, int resolveCollision(int, char[]));
 int functionHash1(char registration[]);
 int functionHash2(char registration[]);
+
 int resolveCollision1(int hash, char registration[]);
 int resolveCollision2(int hash, char registration[]);
 int charToInt(char c);

@@ -4,7 +4,6 @@
  * @brief Função principal do programa. Exibe o menu, processa a escolha do usuário e testa as funções hash.
  * @return Retorna 0 ao finalizar o programa.
  */
-
 int main()
 {
     srand((unsigned)time(NULL));
@@ -42,7 +41,6 @@ int main()
 /**
  * @brief Exibe o menu de opções para o usuário.
  */
-
 void display_menu()
 {
     printf("\n==============================\n");
@@ -60,7 +58,6 @@ void display_menu()
  * @param hashFunction Ponteiro para a função hash a ser testada.
  * @param resolveCollision Ponteiro para a função de resolução de colisões.
  */
-
 void testHashFunction(int hashFunction(char[]), int resolveCollision(int, char[]))
 {
     HashTable hashTable;
@@ -93,7 +90,6 @@ void testHashFunction(int hashFunction(char[]), int resolveCollision(int, char[]
  * @brief Gera um funcionário com valores aleatórios para os campos.
  * @return Employee Estrutura de funcionário gerada.
  */
-
 Employee generateEmployee()
 {
     int number = rand() % 100000;
@@ -115,14 +111,13 @@ Employee generateEmployee()
     if (employee.registration[0] == '0')
         employee.registration[0] = '1';
 
-    return employee;
+    return (employee);
 }
 
 /**
  * @brief Inicializa a tabela hash, preenchendo com valores padrão.
  * @param hashTable Ponteiro para a tabela hash a ser inicializada.
  */
-
 void initializeHashTable(HashTable *hashTable)
 {
     for (int i = 0; i < AVAILABLE_HASH_SIZE; i++)
@@ -138,7 +133,6 @@ void initializeHashTable(HashTable *hashTable)
  * @param resolveCollision Função para resolver colisões.
  * @return int Número de colisões ocorridas durante a inserção.
  */
-
 int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Employee employee, int resolveCollision(int, char[]))
 {
     int collisions = 0, inserted = 0;
@@ -165,7 +159,7 @@ int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Emp
         hashTable->employee[hash] = employee;
     }
 
-    return collisions;
+    return (collisions);
 }
 
 /**
@@ -173,10 +167,9 @@ int insertIntoHashTable(HashTable *hashTable, int hash, char registration[], Emp
  * @param registration Registro do funcionário.
  * @return int Valor hash gerado.
  */
-
 int functionHash1(char registration[])
 {
-    char aux[REGISTRATION_SIZE];
+    char aux[REGISTRATION_SIZE + 1];
 
     aux[0] = registration[REGISTRATION_SIZE - 2];
     aux[1] = registration[REGISTRATION_SIZE - 1];
@@ -185,7 +178,8 @@ int functionHash1(char registration[])
 
     char temp[4] = {aux[1], aux[3], aux[5], '\0'};
     int intValue = atoi(temp);
-    return intValue % AVAILABLE_HASH_SIZE;
+    
+    return (intValue % AVAILABLE_HASH_SIZE);
 }
 
 /**
@@ -193,14 +187,14 @@ int functionHash1(char registration[])
  * @param registration Registro do funcionário.
  * @return int Valor hash gerado.
  */
-
 int functionHash2(char registration[])
 {
     int part1 = (charToInt(registration[1 - 1]) * 100) + (charToInt(registration[3 - 1]) * 10) + (charToInt(registration[6 - 1]));
     int part2 = (charToInt(registration[2 - 1]) * 100) + (charToInt(registration[4 - 1]) * 10) + (charToInt(registration[5 - 1]));
 
     int mudance = part1 + part2;
-    return mudance % AVAILABLE_HASH_SIZE;
+
+    return (mudance % AVAILABLE_HASH_SIZE);
 }
 
 /**
@@ -209,10 +203,10 @@ int functionHash2(char registration[])
  * @param registration Registro do funcionário.
  * @return int Novo valor hash.
  */
-
 int resolveCollision1(int hash, char registration[])
 {
     char firstCharactere[2] = {registration[0], '\0'};
+
     return (hash + atoi(firstCharactere));
 }
 
@@ -222,10 +216,10 @@ int resolveCollision1(int hash, char registration[])
  * @param registration Registro do funcionário (não utilizado).
  * @return int Novo valor hash.
  */
-
 int resolveCollision2(int hash, char registration[])
 {
     (void)registration;
+
     return (hash + 7);
 }
 
@@ -234,7 +228,6 @@ int resolveCollision2(int hash, char registration[])
  * @param c Caractere a ser convertido.
  * @return int Valor inteiro do caractere.
  */
-
 int charToInt(char c)
 {
     return ((int)c - '0');
